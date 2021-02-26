@@ -19,6 +19,17 @@ const userSchema = new Schema(
     phone: {
       type: Number,
     },
+    role: {
+      type: String,
+      enum: ["Administrator", "Standard"],
+      default: "Standard",
+    },
+    services: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Service",
+      },
+    ],
   },
   {
     timestamps: {

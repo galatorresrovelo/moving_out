@@ -2,13 +2,20 @@ const { Schema, model } = require("mongoose");
 
 const serviceSchema = new Schema(
   {
-    start_Date: [{ type: Date }],
-    end_Date: [{ type: Date }],
+    start_Date: Date,
+    end_Date: Date,
     price: Number,
     status: {
       type: String,
-      enum: ["Submitted", "Reviewed", "Confirmed"],
-      default: "Submitted",
+      enum: [
+        "Draft",
+        "Submit",
+        "Reviewed",
+        "Confirmed",
+        "Cancelled",
+        "Complete",
+      ],
+      default: "Draft",
     },
     items: [
       {
@@ -29,6 +36,12 @@ const serviceSchema = new Schema(
     owner: {
       type: Schema.Types.ObjectId,
       ref: "User",
+    },
+    rating: {
+      type: Number,
+      default: 1,
+      min: 1,
+      max: 5,
     },
   },
   {

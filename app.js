@@ -42,6 +42,16 @@ app.use(flash());
 require("./passport")(app);
 
 app.use("/", require("./routes/index"));
-app.use("/auth", require("./routes/auth"));
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/addresses", require("./routes/addresses"));
+app.use("/api/extraservices", require("./routes/extraservices"));
+app.use("/api/items", require("./routes/items"));
+app.use("/api/service", require("./routes/service"));
+
+//esto es muy importante es para seguir en la ruta despues de actualizar
+//podamos entrar a cualquier ruta
+app.use("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
 
 module.exports = app;

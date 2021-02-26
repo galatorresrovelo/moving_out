@@ -10,34 +10,39 @@ const itemsSchema = new Schema(
       enum: ["Furniture", "Home appliances", "Electronic", "Fragile"],
     },
 
-    image: {
+    url: {
       type: String,
       required: true,
     },
     height: {
-      type: Number,
-      min: 0,
+      type: String,
       required: true,
     },
 
     width: {
-      type: Number,
-      min: 0,
+      type: String,
       required: true,
     },
 
     weight: {
-      type: Number,
+      type: String,
       required: true,
     },
 
     service: {
       type: Schema.Types.ObjectId,
       ref: "Service",
+      required: true,
     },
 
     plaster: {
       type: Boolean,
+      default: false,
+    },
+
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
   },
   {

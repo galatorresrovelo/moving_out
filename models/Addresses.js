@@ -1,55 +1,36 @@
 const { Schema, model } = require("mongoose");
 
-const ratingSchema = new Schema(
+const addressesSchema = new Schema(
   {
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
     service: {
       type: Schema.Types.ObjectId,
       ref: "Service",
+      required: true,
     },
-    initial_street: {
-      type: String,
+    // GeoJSON
+    origin: {
+      // type es una propiedad de location de tipo string.
+      type: { type: String },
+      coordinates: [Number],
     },
-    initial_floor: {
-      type: String,
+    destination: {
+      // type es una propiedad de location de tipo string.
+      type: { type: String },
+      coordinates: [Number],
     },
-    initial_city: {
-      type: String,
-    },
-    initial_neighborhood: {
-      type: String,
-    },
-    initial_state: {
-      type: String,
-    },
-    initial_zipcode: {
-      type: String,
-    },
-    initial_country: {
-      type: String,
-    },
-    final_street: {
-      type: String,
-    },
-    final_floor: {
-      type: String,
-    },
-    final_city: {
-      type: String,
-    },
-    final_neighborhood: {
-      type: String,
-    },
-    final_state: {
-      type: String,
-    },
-    final_zipcode: {
-      type: String,
-    },
-    final_country: {
-      type: String,
-    },
+    origin_floor: String,
+    destination_floor: String,
   },
   {
     timestamps: true,
   }
 );
+// Con index, le decimos A mongo que una propiedad (en este caso location) se va a comportar o representar de cierta forma (en este caso como un mapa 2D)
+
+addressesSchema.index({ location: "2dsphere" });
+
+module.exports = model("Addresses", addressesSchema);

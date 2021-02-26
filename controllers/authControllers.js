@@ -56,5 +56,16 @@ exports.logoutAccess = (req, res) => {
 };
 
 exports.checkSession = (req, res) => {
+  const { email, username, avatar } = req.user;
   res.status(200).json(req.user || null);
+};
+
+exports.updateUser = async (req, res) => {
+  const { phone, avatar, email, role } = req.body;
+  const userInfo = await User.findByIdAndUpdate(
+    req.user._id,
+    { phone, avatar, role },
+    { new: true }
+  );
+  res.status(200).json(userInfo);
 };
