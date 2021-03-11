@@ -4,7 +4,14 @@ const extraServicesSchema = new Schema(
   {
     type: {
       type: String,
-      enum: ["Painting", "Carpenter", "Cleaning", "Plumber", "Electrician"],
+      enum: [
+        "Painting",
+        "Carpenter",
+        "Cleaning",
+        "Plumber",
+        "Electrician",
+        "N/A",
+      ],
     },
     description: String,
     owner: {

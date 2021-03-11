@@ -2,7 +2,7 @@ const Service = require("../models/Service");
 const User = require("../models/User");
 
 exports.createService = async (req, res) => {
-  const { start_Date, end_Date } = req.body;
+  const { start_Date, end_Date, _id } = req.body;
 
   const service = await Service.create({
     start_Date,
@@ -13,7 +13,7 @@ exports.createService = async (req, res) => {
   await User.findByIdAndUpdate(req.user._id, {
     $push: { services: service._id },
   });
-  res.status(201).json(service);
+  res.status(201).json({ message: "Successfully created", service });
 };
 
 exports.updateService = async (req, res) => {
@@ -105,4 +105,10 @@ exports.getServiceByUser = async (req, res) => {
   );
   const { services } = user;
   res.status(200).json({ services });
+};
+
+exports.getServiceById = async (req, res) => {
+  const { serviceId } = req.params;
+  const currentService = await Service.findById(serviceId);
+  res.status(200).json(currentService);
 };

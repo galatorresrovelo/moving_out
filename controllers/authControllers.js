@@ -1,5 +1,6 @@
 const passport = require("passport");
 const User = require("../models/User");
+const sendConfirmationEmail = require("./nodeMailer");
 
 //Scrypt to encrypt passwords
 const bcrypt = require("bcrypt");
@@ -43,6 +44,11 @@ exports.signupAccess = (req, res, next) => {
       .save()
       .then(() => {
         res.json(newUser);
+        sendConfirmationEmail({
+          user: newUser.email,
+          userName: newUser.username,
+          userId: newUser._id,
+        });
       })
       .catch((err) => {
         res.status(500).json({ message: "Something went wrong" });
@@ -61,11 +67,50 @@ exports.checkSession = (req, res) => {
 };
 
 exports.updateUser = async (req, res) => {
-  const { phone, avatar, email, role } = req.body;
+  const { phone, username } = req.body;
   const userInfo = await User.findByIdAndUpdate(
     req.user._id,
-    { phone, avatar, role },
+    { phone, username },
     { new: true }
   );
   res.status(200).json(userInfo);
+};
+
+exports.updateRole = async (req, res) => {
+  const { role } = req.body;
+  if (req.user.role === "Administrator") {
+    const userInfo = await User.findByIdAndUpdate(
+      req.user._id,
+      { role },
+      { new: true }
+    );
+    res.status(200).json(userInfo);
+  } else return res.status(401).json({ message: "Unathorized" });
+};
+
+exports.updateActive = async (req, res) => {
+  const { isActive } = req.body;
+  const { userId } = req.params;
+  const userInfo = await User.findByIdAndUpdate(
+    userId,
+    { isActive: true },
+    { new: true }
+  );
+  res.status(200).json(userInfo);
+};
+
+exports.changeAvatar = async (req, res) => {
+  const { avatar } = req.body;
+
+  const user = await User.findByIdAndUpdate(
+    req.user._id,
+    { $set: { avatar } },
+    { new: true }
+  );
+
+  const {
+    _doc: { password, ...rest },
+  } = user;
+
+  res.status(200).json(rest);
 };

@@ -20,6 +20,10 @@ passport.use(
             done(null, false, { message: "Incorrect password" });
             return;
           }
+          if (!foundUser.isActive) {
+            done(null, false, { message: "User is inactive" });
+            return;
+          }
           done(null, foundUser);
         })
         .catch((err) => done(err));

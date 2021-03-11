@@ -8,6 +8,7 @@ const logger = require("morgan");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const flash = require("connect-flash");
+const cors = require("cors");
 
 mongoose
   .connect("mongodb://localhost/server", { useNewUrlParser: true })
@@ -22,6 +23,16 @@ mongoose
 
 const app = express();
 
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:3001",
+      "https://api.cloudinary.com",
+    ],
+    credentials: true,
+  })
+);
 // Middleware Setup
 app.use(logger("dev"));
 app.use(bodyParser.json());
@@ -41,7 +52,7 @@ app.use(
 app.use(flash());
 require("./passport")(app);
 
-app.use("/", require("./routes/index"));
+app.use("/api", require("./routes/index"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/addresses", require("./routes/addresses"));
 app.use("/api/extraservices", require("./routes/extraservices"));

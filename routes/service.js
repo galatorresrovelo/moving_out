@@ -8,6 +8,7 @@ const {
   updateRating,
   updateStatus,
   getServiceByUser,
+  getServiceById,
 } = require("../controllers/serviceController");
 //<<<<Create
 router.post("/", isAuth, catchErrors(createService));
@@ -21,5 +22,7 @@ router.patch("/status/:serviceId", isAuth, catchErrors(updateStatus));
 router.get("/", isAuth, catchErrors(getServiceByUser));
 //<<<<<Delete
 router.delete("/:serviceId", isAuth, catchErrors(deleteService));
+//<<<<<GetServicebyId
+router.get("/:serviceId", isAuth, catchErrors(getServiceById));
 
 module.exports = router;

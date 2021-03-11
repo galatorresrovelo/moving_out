@@ -11,10 +11,14 @@ const userSchema = new Schema(
       type: String,
       unique: true,
     },
-    password: String,
-    Avatar: {
+    isActive: {
       type: String,
-      default: "http://cdn.onlinewebfonts.com/svg/img_561543.png",
+      default: false,
+    },
+    password: String,
+    avatar: {
+      type: String,
+      default: "https://www.shankarainfra.com/img/avatar.png",
     },
     phone: {
       type: Number,

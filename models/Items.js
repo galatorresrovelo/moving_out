@@ -2,18 +2,23 @@ const { Schema, model } = require("mongoose");
 
 const itemsSchema = new Schema(
   {
-    name: String,
+    name: {
+      type: String,
+      required: true,
+    },
+
     description: String,
 
     type: {
       type: String,
       enum: ["Furniture", "Home appliances", "Electronic", "Fragile"],
+      required: true,
     },
 
     url: {
       type: String,
-      required: true,
     },
+
     height: {
       type: String,
       required: true,
