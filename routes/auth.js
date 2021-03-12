@@ -25,7 +25,7 @@ router.patch("/user/update", isAuth, catchErrors(updateUser));
 
 router.patch("/user/role", isAuth, catchErrors(updateRole));
 
-router.patch("/active/:userId", isAuth, catchErrors(updateActive));
+router.patch("/active/:userId", catchErrors(updateActive));
 
 router.post("/avatar/change", isAuth, changeAvatar);
 

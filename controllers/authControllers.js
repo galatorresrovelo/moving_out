@@ -1,6 +1,7 @@
 const passport = require("passport");
 const User = require("../models/User");
-const sendConfirmationEmail = require("./nodeMailer");
+const { getTemplate } = require("../template/welcome");
+const nodemailer = require("nodemailer");
 
 //Scrypt to encrypt passwords
 const bcrypt = require("bcrypt");
@@ -20,6 +21,13 @@ exports.loginAccess = (req, res, next) => {
 
 exports.signupAccess = (req, res, next) => {
   const { email, password, username } = req.body;
+  const transporter = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PASS,
+    },
+  });
 
   if (email === "" || password === "") {
     res.status(400).json({ message: "Indicate email and password" });
@@ -40,19 +48,24 @@ exports.signupAccess = (req, res, next) => {
       password: harshPass,
     });
 
-    newUser
-      .save()
-      .then(() => {
-        res.json(newUser);
-        sendConfirmationEmail({
-          user: newUser.email,
-          userName: newUser.username,
-          userId: newUser._id,
+    newUser.save().then(() => {
+      res.json(newUser);
+      const username = newUser.username;
+      const email = newUser.email;
+      const userId = newUser._id;
+
+      transporter
+        .sendMail({
+          from: "Moving Out <email.test2411@gmail.com>",
+          to: email,
+          subject: "Welcome to Moving Out, please activate your user",
+          html: getTemplate(email, username, userId),
+        })
+        .catch((err) => {
+          console.log(err);
+          res.status(500).json({ message: err.message });
         });
-      })
-      .catch((err) => {
-        res.status(500).json({ message: "Something went wrong" });
-      });
+    });
   });
 };
 

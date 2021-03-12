@@ -248,7 +248,7 @@ You can login to your account with your email <a style="color:white; font-weight
           <p
              style="display:inline-block;background:#ffffff;color:#1AA0E1;font-family:open Sans Helvetica, Arial, sans-serif;font-size:22px;font-weight:bold;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:10px;"
           >
-            <a href="http://localhost:3000/api/auth/activate/${userId}" style="text-decoration:none; color:#1AA0E1">Activate</a>
+            <a href="http://localhost:3000/activate/${userId}" style="text-decoration:none; color:#1AA0E1">Activate</a>
           </p>
         </td>
       </tr>

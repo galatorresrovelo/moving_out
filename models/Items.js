@@ -17,6 +17,8 @@ const itemsSchema = new Schema(
 
     url: {
       type: String,
+      default:
+        "https://image.shutterstock.com/image-vector/add-image-vector-icon-260nw-567401044.jpg",
     },
 
     height: {
