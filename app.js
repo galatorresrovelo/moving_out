@@ -9,6 +9,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const flash = require("connect-flash");
 const cors = require("cors");
+const path = require("path");
 
 mongoose
   .connect(process.env.DB, { useNewUrlParser: true })
@@ -25,7 +26,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3001"],
+    origin: ["http://localhost:3001", "https://movingout88.herokuapp.com"],
     credentials: true,
   })
 );
@@ -34,6 +35,7 @@ app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(express.static(path.join(__dirname, "public")));
 
 //Enable authentication using session + passport
 app.use(
@@ -54,7 +56,6 @@ app.use("/api/addresses", require("./routes/addresses"));
 app.use("/api/extraservices", require("./routes/extraservices"));
 app.use("/api/items", require("./routes/items"));
 app.use("/api/service", require("./routes/service"));
-app.use(express.static("public"));
 
 //esto es muy importante es para seguir en la ruta despues de actualizar
 //podamos entrar a cualquier ruta
