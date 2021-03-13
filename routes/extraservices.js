@@ -7,7 +7,7 @@ const {
   updateExtraServices,
   deleteExtraServices,
   getExtraServicesById,
-} = require("../controllers/extraservicesController");
+} = require("../controllers/extraServicesController");
 
 //<<<<<Create
 router.post("/", isAuth, catchErrors(createExtraServices));
