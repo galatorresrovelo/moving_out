@@ -30,7 +30,7 @@ exports.updateService = async (req, res) => {
       { start_Date, end_Date, status: "Draft" },
       { new: true }
     );
-    res.status(200).json(service_update);
+    res.status(200).json({ service: service_update });
   } else
     return res
       .status(401)

@@ -8,6 +8,7 @@ passport.use(
     {
       usernameField: "email",
       passwordField: "password",
+      isActive: "isActive",
     },
     (email, password, done) => {
       User.findOne({ email })

@@ -25,11 +25,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "http://localhost:3001",
-      "https://api.cloudinary.com",
-    ],
+    origin: ["http://localhost:3000", "http://localhost:3001"],
     credentials: true,
   })
 );

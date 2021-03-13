@@ -80,10 +80,10 @@ exports.checkSession = (req, res) => {
 };
 
 exports.updateUser = async (req, res) => {
-  const { phone, username } = req.body;
+  const { phone } = req.body;
   const userInfo = await User.findByIdAndUpdate(
     req.user._id,
-    { phone, username },
+    { phone },
     { new: true }
   );
   res.status(200).json(userInfo);
