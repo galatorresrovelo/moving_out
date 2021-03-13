@@ -11,7 +11,7 @@ const flash = require("connect-flash");
 const cors = require("cors");
 
 mongoose
-  .connect("mongodb://localhost/server", { useNewUrlParser: true })
+  .connect(process.env.DB, { useNewUrlParser: true })
   .then((x) => {
     console.log(
       `Connected to Mongo! Database name: "${x.connections[0].name}"`
@@ -54,6 +54,7 @@ app.use("/api/addresses", require("./routes/addresses"));
 app.use("/api/extraservices", require("./routes/extraservices"));
 app.use("/api/items", require("./routes/items"));
 app.use("/api/service", require("./routes/service"));
+app.use(express.static("public"));
 
 //esto es muy importante es para seguir en la ruta despues de actualizar
 //podamos entrar a cualquier ruta
